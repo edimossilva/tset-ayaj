@@ -3,8 +3,15 @@ class GithubWebhooksController < ActionController::Base
 
   # Handle push event
   def create
+    issue = Issue.new
+    issue_state = params['issue']['state']
+    issue.action = Issue.actions[issue_state]
+    issue.save
     binding.pry
-    puts params
+  end
+
+  def index
+    render json: Issue.all
   end
 
 end
