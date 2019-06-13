@@ -1,11 +1,9 @@
 class GithubWebhooksController < ActionController::Base
   skip_before_action :verify_authenticity_token
 
-  before_action :validate_params
+  before_action :validate_params, only: [:create]
 
-  # Handle push event
   def create
-
     issue = Issue.new
     issue.action = Issue.actions[issue_state]
 
@@ -21,6 +19,7 @@ class GithubWebhooksController < ActionController::Base
   end
 
   private
+
   def validate_params
     unless (valid_params?)
       render json: {}, status: :bad_request
