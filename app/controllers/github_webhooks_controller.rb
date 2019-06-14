@@ -8,7 +8,7 @@ class GithubWebhooksController < ActionController::Base
     issue.action = Issue.actions[issue_state]
 
     if (issue.save)
-      render json: issue, status: :created
+      render json: issue, status: :created, serializer: IssueSerializer
     else
       render json: {errors: issue.errors}, status: :unprocessable_entity
     end
